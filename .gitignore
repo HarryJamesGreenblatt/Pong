@@ -31,3 +31,7 @@ tsconfig.json
 tsconfig.node.json
 vite.config.ts
 eslint.config.js
+
+
+.gitattributes
+.gitignore
