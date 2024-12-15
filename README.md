@@ -4,7 +4,7 @@ This project is an automated Pong game built with React, TypeScript, and Vite. T
 
 ## Live Demo
 
-You can play the game online at [🏓Pong Game](https://harryjamesgreenblatt.github.io/Pong/).
+You can play the game online at [https://harryjamesgreenblatt.github.io/Pong/](https://harryjamesgreenblatt.github.io/Pong/).
 
 ## Game Description
 
