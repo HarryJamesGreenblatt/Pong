@@ -72,7 +72,7 @@ class Paddle {
   // Make the paddle anticipate where the ball will land
   //   p: a reference to the p5 instance
   //   ball: a reference to the Ball object
-  anticipate(p: p5, ball: Ball) {
+  anticipate(ball: Ball) {
 
     // Predict the future position of the ball
     const predictedY = ball.y + ball.speedY * (this.x - ball.x) / ball.speedX;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slider, Typography, TextField, Divider } from '@mui/material';
+import { Slider, Typography, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 /*
@@ -36,7 +36,7 @@ const ControlInput: React.FC<ControlInputProps> = ({ label, min, max, step = 1, 
           min={min}
           max={max}
           step={step}
-          onChange={(e, value) => onChange(value as number)}
+          onChange={(_, value) => onChange(value as number)}
           valueLabelDisplay="off"
         />
       </Grid>

@@ -4,8 +4,7 @@ import { GRAVITY, PADDLE_PROPERTIES, BALL_PROPERTIES } from './config';
 import Pong from './components/Pong';
 import './App.css';
 import ControlPanel from './components/controls/ControlPanel';
-import YellowPaddle from  './assets/YellowPadddle.png';
-import BluePaddle from './assets/BluePadddle.png';
+
 
 const App: React.FC = () => {
   const [config, setConfig] = useState({

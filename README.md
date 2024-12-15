@@ -1,50 +1,33 @@
-# React + TypeScript + Vite
+# Pong Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is an automated Pong game built with React, TypeScript, and Vite. The game features two paddles: Yellow, which follows the ball, and Blue, which anticipates the ball's movement. The game is available to play online via GitHub Pages.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You can play the game online at [🏓Pong Game](https://harryjamesgreenblatt.github.io/Pong/).
 
-## Expanding the ESLint configuration
+## Game Description
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+In this automated Pong game:
+- The Yellow paddle uses an algorithm to follow the ball.
+- The Blue paddle uses an algorithm to anticipate the ball's movement.
 
-- Configure the top-level `parserOptions` property like this:
+## Controls
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+The game provides a control panel to adjust various environmental properties and physical characteristics of the ball and paddles. You can modify the following settings:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Environmental Properties
+- **Gravity**: Adjust the amount of gravity in the game.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Ball Properties
+- **Mass**: Adjust the mass of the ball.
+- **Radius**: Adjust the radius of the ball.
+- **Max Speed**: Adjust the maximum speed of the ball.
+- **Max Bounce Angle**: Adjust the maximum bounce angle of the ball.
+- **Spin Factor**: Adjust the spin factor of the ball.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Paddle Properties
+- **Width**: Adjust the width of the paddles.
+- **Height**: Adjust the height of the paddles.
+- **Padding**: Adjust the padding of the paddles.
+- **Success Rate**: Adjust the success rate of the paddles.

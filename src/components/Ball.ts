@@ -50,7 +50,7 @@ class Ball {
 
   // Move the ball according to its speed and gravity
   //   p: a reference to the p5 instance
-  move(p: p5) {
+  move() {
     this.speedY += this.gravity;  // Apply gravity to the vertical speed
     this.x += this.speedX;        // Move the ball horizontally
     this.y += this.speedY;        // Move the ball vertically
@@ -153,8 +153,7 @@ class Ball {
   }
 
   // Check if the ball is out of bounds
-  //   p: a reference to the p5 instance
-  checkOutOfBounds(p: p5): 'left' | 'right' | null {
+  checkOutOfBounds(): 'left' | 'right' | null {
     
     // if the ball is to the left of the window, return 'left'
     if (this.x < 0 - WINDOW_DIMENSIONS.BOUNDARY_OFFSET) return 'left';

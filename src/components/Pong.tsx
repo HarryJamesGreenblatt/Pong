@@ -73,7 +73,7 @@ const Pong: React.FC<{ config: any }> = ({ config }) => {
 
         // if the cooldown counter is 0, move the ball
         if (cooldownCounter === 0) {
-          ball.move(p);
+          ball.move();
         } else {
           // otherwise, decrement the cooldown counter
           cooldownCounter--;
@@ -88,7 +88,7 @@ const Pong: React.FC<{ config: any }> = ({ config }) => {
 
         // Draw the right paddle and make it anticipate the ball
         rightPaddle.draw(p);
-        rightPaddle.anticipate(p, ball);
+        rightPaddle.anticipate(ball);
 
         // Prpare to draw a dashed center line
         p.strokeWeight(1);               
@@ -114,7 +114,7 @@ const Pong: React.FC<{ config: any }> = ({ config }) => {
         // Check for collisions and scoring
         ball.handlePaddleCollision(leftPaddle);       // Check for collision with left paddle
         ball.handlePaddleCollision(rightPaddle);      // Check for collision with right paddle
-        const outOfBounds = ball.checkOutOfBounds(p); // Check if the ball is out of bounds
+        const outOfBounds = ball.checkOutOfBounds();  // Check if the ball is out of bounds
         if (outOfBounds) {                            // If the ball is out of bounds
           if (outOfBounds === 'left') rightScore++;      // Increment the right score if the ball is out on the left   
           if (outOfBounds === 'right') leftScore++;      // Increment the left score if the ball is out on the right
