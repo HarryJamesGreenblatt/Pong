@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <style>
+        canvas { background: black; display: block; margin: 0 auto; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        async function loadPythonFile(pyodide, url) {
+            const response = await fetch(url);
+            const code = await response.text();
+            pyodide.runPython(code);
+        }
+
+        async function main() {
+            let pyodide = await loadPyodide({
+                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/"
+            });
+
+            // Load and run Python files
+            await loadPythonFile(pyodide, 'config.py');
+            await loadPythonFile(pyodide, 'classes/Paddle.py');
+            await loadPythonFile(pyodide, 'classes/Ball.py');
+            await loadPythonFile(pyodide, 'classes/Pong.py');
+
+            // Initialize the game
+            pyodide.runPython(`
+import sys
+sys.path.append('/lib/python3.9/site-packages')
+from classes.Pong import Pong
+
+class WebPong(Pong):
+    def __init__(self, display):
+        super().__init__(display)
+
+    def update(self):
+        super().update()
+        return {
+            'ball': {'x': self.ball.rect.x, 'y': self.ball.rect.y},
+            'left_paddle': {'y': self.left_paddle.rect.y},
+            'right_paddle': {'y': self.right_paddle.rect.y},
+            'left_score': self.left_score,
+            'right_score': self.right_score
+        }
+
+game = WebPong(None)
+            `);
+
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+
+            function draw(state) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'white';
+
+                // Draw ball
+                ctx.beginPath();
+                ctx.arc(state.ball.x, state.ball.y, 10, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Draw paddles
+                ctx.fillRect(30, state.left_paddle.y, 10, 100);
+                ctx.fillRect(760, state.right_paddle.y, 10, 100);
+
+                // Draw scores
+                ctx.font = '48px serif';
+                ctx.fillText(state.left_score, 200, 50);
+                ctx.fillText(state.right_score, 600, 50);
+            }
+
+            function gameLoop() {
+                const state = pyodide.runPython('game.update()');
+                draw(state);
+                requestAnimationFrame(gameLoop);
+            }
+
+            gameLoop();
+        }
+
+        main();
+    </script>
+</body>
+</html>
