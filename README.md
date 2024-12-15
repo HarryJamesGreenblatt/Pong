@@ -1,4 +1,4 @@
-#🏓Pong Game
+# 🏓Pong Game
 
 This project is an automated Pong game built with React, TypeScript, and Vite. The game features two paddles: Yellow, which follows the ball, and Blue, which anticipates the ball's movement. The game is available to play online via GitHub Pages.
 
