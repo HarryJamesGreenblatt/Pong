@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+
+body{
+  background: rgb(200, 199, 223);
+  background: linear-gradient(
+    to right, 
+    rgba(233, 233, 167, 0.613) 50%,
+    rgba(200, 199, 223, 0.605) 50%
+  );
+  height: calc(100vh - 2.5em);
+}
+
+#root{
+  height: 100%;
+}
+
+.App{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+h1{
+  font-family: 'tiny5', sans-serif;
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  animation: hover 3s ease-in-out infinite; /* Apply the animation */
+}
+
+@keyframes hover {
+  0%, 50%, 100% {
+    transform: translateY(0);
+  }
+  25%, 75% {
+    transform: translateY(7px);
+  }
+}
+
+canvas {
+  display: block;
+  border: 1px solid #ccc; /* Optional border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), /* Main shadow */
+              0 6px 20px rgba(0, 0, 0, 0.19); 
+}
+
+.pong-container {
+  height: 100%;
+}
+
+
+.pong-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(121, 115, 115),
+    lightgray 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  z-index: -1; /* Ensure the line is behind the canvas */
+}
+
+.paddle-sections {
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.paddle-section {
+  margin: 0 20px;
+}
+
+.paddle-section img {
+  width: 13em;
+  opacity: 0.15;
+}
