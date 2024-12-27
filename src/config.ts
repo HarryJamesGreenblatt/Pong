@@ -16,7 +16,7 @@ export const WINDOW_DIMENSIONS = {
 export const GRAVITY = 0;
 
 export const PADDLE_PROPERTIES = {
-  PADDING: 75,
+  OFFSET: 75,
   SPEED: 10,
   WIDTH: 10,
   HEIGHT: 125,

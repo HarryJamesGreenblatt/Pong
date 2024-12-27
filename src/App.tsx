@@ -17,13 +17,13 @@ const App: React.FC = () => {
     leftPaddle: {
       width: PADDLE_PROPERTIES.WIDTH,
       height: PADDLE_PROPERTIES.HEIGHT,
-      padding: PADDLE_PROPERTIES.PADDING,
+      offset: PADDLE_PROPERTIES.OFFSET,
       successRate: PADDLE_PROPERTIES.LEFT_SUCCESS_RATE,
     },
     rightPaddle: {
       width: PADDLE_PROPERTIES.WIDTH,
       height: PADDLE_PROPERTIES.HEIGHT,
-      padding: PADDLE_PROPERTIES.PADDING,
+      offset: PADDLE_PROPERTIES.OFFSET,
       successRate: PADDLE_PROPERTIES.RIGHT_SUCCESS_RATE,
     },
   });

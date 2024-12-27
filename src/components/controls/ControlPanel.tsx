@@ -18,13 +18,13 @@ interface ControlPanelProps {
     leftPaddle: {                      // An object that represents the configuration for the left paddle
       width: number;                     // A number that represents the width of the left paddle
       height: number;                    // A number that represents the height of the left paddle
-      padding: number;                   // A number that represents the padding of the left paddle
+      offset: number;                   // A number that represents the offset of the left paddle
       successRate: number;               // A number that represents the success rate of the left paddle
     };
     rightPaddle: {                     // An object that represents the configuration for the right paddle
       width: number;                     // A number that represents the width of the right paddle
       height: number;                    // A number that represents the height of the right paddle
-      padding: number;                   // A number that represents the padding of the right paddle
+      offset: number;                   // A number that represents the offset of the right paddle
       successRate: number;               // A number that represents the success rate of the right paddle
     };
   };
@@ -63,11 +63,11 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ config, onChange }) => {
   const [ballSpinFactor, setBallSpinFactor] = useState(config.ballSpinFactor);
   const [leftPaddleWidth, setLeftPaddleWidth] = useState(config.leftPaddle.width);
   const [leftPaddleHeight, setLeftPaddleHeight] = useState(config.leftPaddle.height);
-  const [leftPaddlePadding, setLeftPaddlePadding] = useState(config.leftPaddle.padding);
+  const [leftPaddleOffset, setLeftPaddleOffset] = useState(config.leftPaddle.offset);
   const [leftPaddleSuccessRate, setLeftPaddleSuccessRate] = useState(config.leftPaddle.successRate);
   const [rightPaddleWidth, setRightPaddleWidth] = useState(config.rightPaddle.width);
   const [rightPaddleHeight, setRightPaddleHeight] = useState(config.rightPaddle.height);
-  const [rightPaddlePadding, setRightPaddlePadding] = useState(config.rightPaddle.padding);
+  const [rightPaddleOffset, setRightPaddleOffset] = useState(config.rightPaddle.offset);
   const [rightPaddleSuccessRate, setRightPaddleSuccessRate] = useState(config.rightPaddle.successRate);
   
   // The useEffect hook ensures that the configuration is updated whenever a state variable changes
@@ -83,11 +83,11 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ config, onChange }) => {
     ballSpinFactor,
     leftPaddleWidth,
     leftPaddleHeight,
-    leftPaddlePadding,
+    leftPaddleOffset,
     leftPaddleSuccessRate,
     rightPaddleWidth,
     rightPaddleHeight,
-    rightPaddlePadding,
+    rightPaddleOffset,
     rightPaddleSuccessRate,
   ]);
 
@@ -106,13 +106,13 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ config, onChange }) => {
       leftPaddle: {
         width: leftPaddleWidth,
         height: leftPaddleHeight,
-        padding: leftPaddlePadding,
+        offset: leftPaddleOffset,
         successRate: leftPaddleSuccessRate,
       },
       rightPaddle: {
         width: rightPaddleWidth,
         height: rightPaddleHeight,
-        padding: rightPaddlePadding,
+        offset: rightPaddleOffset,
         successRate: rightPaddleSuccessRate,
       },
     });
@@ -126,7 +126,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ config, onChange }) => {
         Game Settings
       </Button>
       <Drawer anchor="bottom" open={drawerOpen} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: 'auto', padding: 2, backgroundColor: 'rgba(0, 0, 0, 0.5)', color: 'whitesmoke' }}>
+        <Box sx={{ width: 'auto', Offset: 2, backgroundColor: 'rgba(0, 0, 0, 0.5)', color: 'whitesmoke' }}>
           <Accordion>
             <AccordionSummary expandIcon={<span role="img" aria-label="water">🌎</span>}>
               <Typography>Environmental Properties</Typography>
@@ -161,14 +161,14 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ config, onChange }) => {
                   <Typography variant="h6">Left Paddle</Typography>
                   <ControlInput label="Width" min={5} max={50} value={leftPaddleWidth} onChange={setLeftPaddleWidth} />
                   <ControlInput label="Height" min={50} max={(WINDOW_DIMENSIONS.WIDTH/2)-50} value={leftPaddleHeight} onChange={setLeftPaddleHeight} />
-                  <ControlInput label="Padding" min={0} max={(WINDOW_DIMENSIONS.WIDTH/2)-50} value={leftPaddlePadding} onChange={setLeftPaddlePadding} />
+                  <ControlInput label="Offset" min={0} max={(WINDOW_DIMENSIONS.WIDTH/2)-50} value={leftPaddleOffset} onChange={setLeftPaddleOffset} />
                   <ControlInput label="Success Rate" min={0} max={1} step={0.01} value={leftPaddleSuccessRate} onChange={setLeftPaddleSuccessRate} />
                 </Grid>
                 <Grid size={{xs:6}}>
                   <Typography variant="h6">Right Paddle</Typography>
                   <ControlInput label="Width" min={5} max={50} value={rightPaddleWidth} onChange={setRightPaddleWidth} />
                   <ControlInput label="Height" min={50} max={(WINDOW_DIMENSIONS.WIDTH/2)-50} value={rightPaddleHeight} onChange={setRightPaddleHeight} />
-                  <ControlInput label="Padding" min={0} max={(WINDOW_DIMENSIONS.WIDTH/2)-50} value={rightPaddlePadding} onChange={setRightPaddlePadding} />
+                  <ControlInput label="Offset" min={0} max={(WINDOW_DIMENSIONS.WIDTH/2)-50} value={rightPaddleOffset} onChange={setRightPaddleOffset} />
                   <ControlInput label="Success Rate" min={0} max={1} step={0.01} value={rightPaddleSuccessRate} onChange={setRightPaddleSuccessRate} />
                 </Grid>
               </Grid>

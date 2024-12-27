@@ -45,7 +45,7 @@ const Pong: React.FC<{ config: any }> = ({ config }) => {
 
         // Create a new left paddle
         leftPaddle = new Paddle(
-          config.leftPaddle.padding,
+          config.leftPaddle.offset,
           p.height / 2 - config.leftPaddle.height / 2,
           config.leftPaddle.width,
           config.leftPaddle.height,
@@ -55,7 +55,7 @@ const Pong: React.FC<{ config: any }> = ({ config }) => {
         
         // Create a new right paddle
         rightPaddle = new Paddle(
-          p.width - config.rightPaddle.padding - config.rightPaddle.width,
+          p.width - config.rightPaddle.offset - config.rightPaddle.width,
           p.height / 2 - config.rightPaddle.height / 2,
           config.rightPaddle.width,
           config.rightPaddle.height,
