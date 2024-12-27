@@ -18,13 +18,13 @@ interface ControlPanelProps {
     leftPaddle: {                      // An object that represents the configuration for the left paddle
       width: number;                     // A number that represents the width of the left paddle
       height: number;                    // A number that represents the height of the left paddle
-      offset: number;                   // A number that represents the offset of the left paddle
+      offset: number;                    // A number that represents the offset of the left paddle
       successRate: number;               // A number that represents the success rate of the left paddle
     };
     rightPaddle: {                     // An object that represents the configuration for the right paddle
       width: number;                     // A number that represents the width of the right paddle
       height: number;                    // A number that represents the height of the right paddle
-      offset: number;                   // A number that represents the offset of the right paddle
+      offset: number;                    // A number that represents the offset of the right paddle
       successRate: number;               // A number that represents the success rate of the right paddle
     };
   };
