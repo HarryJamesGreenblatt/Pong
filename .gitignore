@@ -33,5 +33,9 @@ tsconfig.node.json
 vite.config.ts
 eslint.config.js
 
+# Ignore TypeScript build info files
+tsconfig.tsbuildinfo
+tsconfig.node.tsbuildinfo
+
 *Copilot*
 *FileCOntentIndex*

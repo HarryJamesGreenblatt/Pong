@@ -31,3 +31,15 @@ The game provides a control panel to adjust various environmental properties and
 - **Height**: Adjust the height of the paddles.
 - **Padding**: Adjust the padding of the paddles.
 - **Success Rate**: Adjust the success rate of the paddles.
+
+## Recent Updates
+
+### Game Data Tracking
+- The game now tracks detailed game data, including the number of volleys, scores, time taken for each game, and the scorer.
+- The `timeTaken` is now calculated relative to each game, ensuring accurate tracking of game durations.
+- Each game's end time is recorded and displayed in a human-readable format.
+
+### Code Enhancements
+- Added a new `endTime` property to the game data to facilitate accurate time tracking.
+- Transformed the game data to include a readable end time using JavaScript's `Date` object.
+- Updated the `Pong` component to reset the `startTime` at the beginning of each game and calculate the `timeTaken` relative to the previous game's end time.
