@@ -4,9 +4,14 @@ import { GRAVITY, PADDLE_PROPERTIES, BALL_PROPERTIES } from './config';
 import Pong from './components/Pong';
 import './App.css';
 import ControlPanel from './components/controls/ControlPanel';
+import { GameDataProvider } from './context/GameDataContext';
 
 
+// App component
 const App: React.FC = () => {
+  
+
+  // State variable to keep track of the game configuration
   const [config, setConfig] = useState({
     gravity: GRAVITY,
     ballMass: BALL_PROPERTIES.MASS,
@@ -28,24 +33,24 @@ const App: React.FC = () => {
     },
   });
 
+  // Function to update the configuration when the control panel changes
   const handleConfigChange = (newConfig: any) => {
     setConfig(newConfig);
   };
 
+  // Render the Pong game and the control panel
   return (
-    <div className="App">
-      <h1>Pong</h1>
-      <Pong config={config} />
-      <ControlPanel config={config} onChange={handleConfigChange} />
-      {/* <div className="paddle-sections">
-        <div className="paddle-section">
-          <img src={YellowPaddle} alt="Yellow Paddle" />
-        </div>
-        <div className="paddle-section">
-          <img src={BluePaddle} alt="Blue Paddle" />
-        </div>
-      </div> */}
-    </div>
+
+    // Wrap the app in the GameDataProvider to provide game data to the children
+    <GameDataProvider>
+      
+      <div className="App">
+        <h1>Pong</h1>
+        <Pong config={config} />
+        <ControlPanel config={config} onChange={handleConfigChange} />
+      </div>
+      
+    </GameDataProvider>
   );
 };
 

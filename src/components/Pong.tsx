@@ -1,16 +1,30 @@
 // src/components/Pong.tsx
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import p5 from 'p5';
 import Paddle from './Paddle';
 import Ball from './Ball';
 import { COLORS, WINDOW_DIMENSIONS } from '../config'
-import '../App.css'; // Import the CSS file
+import '../App.css'; 
+import { useGameData } from '../context/GameDataContext';
 
 
+// Pong component that takes a config object as a prop and renders a p5 sketch
 const Pong: React.FC<{ config: any }> = ({ config }) => {
   
+
   // Create a reference to the div element that will contain the sketch
   const sketchRef = useRef<HTMLDivElement>(null); 
+
+  // Create a reference to the game data context
+  const { gameData, setGameData } = useGameData();
+
+  // Create state variable to transform the game data
+  const [transformedGameData, setTransformedGameData] = useState<any[]>([]);
+
+  // Create state variables to keep track of the volleys and start time
+  const [volleys, setVolleys] = useState(0);
+  const [startTime, setStartTime] = useState<number | null>(null);
+
 
   // useEffect hook to create the sketch when the component mounts
   useEffect(() => {
@@ -43,6 +57,33 @@ const Pong: React.FC<{ config: any }> = ({ config }) => {
           config.ballMaxBounceAngle
         );
 
+        // Set the onPaddleCollision function to increment the volleys counter
+        ball.onPaddleCollision = () => {
+
+          // Increment the volleys counter
+          setVolleys((prevVolleys) => {
+            const newVolleys = prevVolleys + 1;
+              
+            // Update the game data with the new volleys counter
+            setGameData((prevData) => {
+
+              // Create a new array with the previous data
+              const updatedData = [...prevData];
+
+              // If there is any data, update the last entry with the new volleys counter
+              if (updatedData.length > 0) {
+                updatedData[updatedData.length - 1].volleys = newVolleys;
+              }
+
+              // Set the game data to the updated data
+              return updatedData;
+            });
+            
+            // Return the new volleys counter
+            return newVolleys;
+          });
+        };
+
         // Create a new left paddle
         leftPaddle = new Paddle(
           config.leftPaddle.offset,
@@ -62,6 +103,9 @@ const Pong: React.FC<{ config: any }> = ({ config }) => {
           COLORS.BLUE,
           config.rightPaddle.successRate
         );
+
+        // Set the start time to the current time
+        setStartTime(Date.now());
         
       };
 
@@ -114,13 +158,39 @@ const Pong: React.FC<{ config: any }> = ({ config }) => {
         // Check for collisions and scoring
         ball.handlePaddleCollision(leftPaddle);       // Check for collision with left paddle
         ball.handlePaddleCollision(rightPaddle);      // Check for collision with right paddle
+        
         const outOfBounds = ball.checkOutOfBounds();  // Check if the ball is out of bounds
+      
         if (outOfBounds) {                            // If the ball is out of bounds
-          if (outOfBounds === 'left') rightScore++;      // Increment the right score if the ball is out on the left   
-          if (outOfBounds === 'right') leftScore++;      // Increment the left score if the ball is out on the right
-          ball.reset(p);                                 // Reset the ball to the center of the canvas
-          cooldownCounter = cooldown;                    // Set the cooldown counter to the cooldown value
-        }
+          
+          const endTime = Date.now();                   // Get the current time 
+          const timeTaken =                             // Calculate the time taken
+          (endTime - (startTime || endTime)) / 1000;    // in seconds
+          
+          if (outOfBounds === 'left') rightScore++;    // Increment the right score if out of bounds on left
+          if (outOfBounds === 'right') leftScore++;    // Increment the left score if out of bounds on right
+          
+          setGameData((prevData) => [                   // Update the game data 
+            ...prevData,                                //  with all the previous data
+            {                                           //  and the new data, including:
+              volleys,                                     //  the number of volleys,
+              leftScore,                                   //  the left score,
+              rightScore,                                  //  the right score,
+              timeTaken,                                   //  the time taken,
+              endTime,                                     //  the end time,
+              scorer: outOfBounds === 'left'            // track the next scorer:
+              ? 'Blue'                                   // if out of bounds on left, next scorer is 'Blue'   
+              : 'Yellow',                                // otherwise, next scorer is 'Yellow'
+            },
+          ]);
+          
+          setVolleys(0);                               // Reset the volleys counter
+          setStartTime(Date.now());                       
+          
+          ball.reset(p);                               // Reset the ball
+      
+          cooldownCounter = cooldown;                  // Set the cooldown counter to the cooldown value
+        }        
       };
     };
 
@@ -132,8 +202,42 @@ const Pong: React.FC<{ config: any }> = ({ config }) => {
 
   }, [config]); // Add config as a dependency
 
-  // Return the pong container that will contain the sketch
-  return <div className="pong-container" ref={sketchRef}></div>;
+
+  // Transform the game data to include the time taken and readable end time
+  useEffect(() => {
+
+    // Map over the game data and transform each entry
+    const transformedData = gameData.map((data, index) => {
+
+      // Calculate the relative time taken from the previous end time
+      const previousEndTime = index > 0 ? gameData[index - 1].endTime : startTime;
+      const relativeTimeTaken = (data.endTime - (previousEndTime || data.endTime)) / 1000;
+
+      // Calculate the human readable end time
+      const readableEndTime = new Date(data.endTime).toLocaleString(); 
+
+      // Return the transformed data
+      return {
+        ...data,
+        timeTaken: relativeTimeTaken,
+        readableEndTime,
+      };
+
+    });
+
+    // Set the transformed game data
+    setTransformedGameData(transformedData);
+  }, [gameData]); // The effect will run whenever the game data changes
+
+  // Log the transformed game data to the console
+  useEffect(() => {
+    console.log(transformedGameData);
+  }, [transformedGameData]); // The effect will run whenever the transformed game data changes
+
+  // Render the div element that will contain the sketch
+  return (
+    <div className="pong-container" ref={sketchRef}></div>
+  );
 
 };
 

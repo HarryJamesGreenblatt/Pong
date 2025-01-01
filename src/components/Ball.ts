@@ -77,6 +77,9 @@ class Ball {
     }
   }
 
+  // Add a callback function for paddle collisions
+  onPaddleCollision: (() => void) | null = null;
+
   // Handle collision with a paddle
   //   paddle: a reference to the Paddle object
   handlePaddleCollision(paddle: Paddle) {
@@ -115,7 +118,12 @@ class Ball {
 
       // Unstick the ball from the paddle after collision in case of an overlap condition
       this.unstick(paddle);
+
+      if (this.onPaddleCollision) {
+        this.onPaddleCollision();
+      }
     }
+
   }
 
   // Unstick the ball from the paddle after collision
